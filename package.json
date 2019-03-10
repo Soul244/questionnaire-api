@@ -1,0 +1,40 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "A Test Application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "deploy": "gcloud app deploy"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "Hasan Can Gedik",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.2.0",
+    "draftjs-to-html": "^0.8.4",
+    "express": "^4.16.3",
+    "generate-password": "^1.4.1",
+    "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
+    "mongoose": "^5.2.6",
+    "morgan": "^1.9.0",
+    "nodemailer": "^5.0.0",
+    "nodemon": "^1.18.3"
+  },
+  "devDependencies": {
+    "ws": "3.3.2"
+  },
+  "env": {
+    "JWT_KEY": "142536",
+    "DB_HOST": "mongodb://localhost:27017/testdb",
+    "DB_USER": "root",
+    "DB_PASS": "s1mpl3"
+  }
+}

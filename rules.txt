@@ -1,0 +1,4 @@
+there is not records: Have to return 204
+post is accepted: Have to return 201,
+get, delete, update: 200,
+error: 500
