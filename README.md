@@ -1,3 +1,3 @@
-# Bilemezsin-Api
+# Questionnaire-Api
 
-Bilemezsin Anket Projesi Api
+Questionnaire Projesi Api
