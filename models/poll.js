@@ -7,7 +7,6 @@ const pollSchema = mongoose.Schema({
   js: { type: String },
   name: { type: String, required: true },
   desc: { type: String },
-  slug: { type: String, required: true },
   lastDesc: { type: String },
   selectableLastMessages: [{
     type: { type: String },

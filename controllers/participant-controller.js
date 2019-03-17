@@ -5,7 +5,7 @@ const { CreatePostObject } = require('../utils');
 exports.Get_Participants = (req, res) => {
   Poll
     .findOne({
-      slug: req.params.slug,
+      _id: req.params._id,
     })
     .exec()
     .then((poll) => {
@@ -53,15 +53,12 @@ exports.Create_Participant = (req, res) => {
       })
         .exec()
         .then((poll) => {
-          const pAnswers = req.body.answers;
-          const {
-            answers,
-            questions,
-          } = poll;
-          for (let i = 0; i < pAnswers.length; i += 1) {
+          const userAnswers = req.body.answers;
+          const { answers, questions } = poll;
+          for (let i = 0; i < userAnswers.length; i += 1) {
             for (let k = 0; k < answers.length; k += 1) {
-              if (pAnswers[i].questionIndex === answers[k].questionIndex) {
-                if (pAnswers[i].index === answers[k].index) {
+              if (userAnswers[i].questionIndex === answers[k].questionIndex) {
+                if (userAnswers[i].index === answers[k].index) {
                   answers[k].count += 1;
                 }
               }

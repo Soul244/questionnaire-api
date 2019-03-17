@@ -5,6 +5,6 @@ const ParticipantController = require('../controllers/participant-controller');
 const checkAuth = require('../middleware/check-auth');
 
 router.post('/', ParticipantController.Create_Participant);
-router.get('/:slug', ParticipantController.Get_Participants);
+router.get('/:_id', ParticipantController.Get_Participants);
 
 module.exports = router;

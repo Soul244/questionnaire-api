@@ -5,9 +5,8 @@ const {
 } = require('../utils');
 
 exports.Get_Poll = (req, res) => {
-  Poll
-    .findOne({
-      slug: req.params.slug,
+  Poll.findOne({
+      _id: req.params._id,
     })
     .exec()
     .then((poll) => {
@@ -27,30 +26,19 @@ exports.Get_Poll = (req, res) => {
 };
 
 exports.Create_Poll = (req, res) => {
-  Poll
-    .find({
-      slug: req.body.slug,
+  const poll = new Poll(CreatePostObject(req.body));
+  poll
+    .save()
+    .then(() => {
+      res.status(201).json({
+        message: 'Anket Kaydedildi',
+      });
     })
-    .exec()
-    .then((filteredPoll) => {
-      if (filteredPoll.length >= 1) {
-        res.statusText = 'Bu slug kullanılıyor';
-        return res.status(500).json();
-      }
-      const poll = new Poll(CreatePostObject(req.body));
-      poll
-        .save()
-        .then(() => {
-          res.status(201).json({
-            message: 'Anket Kaydedildi',
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(500).json({
-            error,
-          });
-        });
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        error,
+      });
     });
 };
 
@@ -65,7 +53,7 @@ exports.Get_All_Polls = (req, res) => {
   });
   Poll
     .find()
-    .select('name desc slug user createdAt')
+    .select('_id name desc user createdAt')
     .populate('user', '_id email')
     .limit(perPage)
     .skip(perPage * page)
