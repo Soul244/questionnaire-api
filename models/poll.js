@@ -13,20 +13,17 @@ const pollSchema = mongoose.Schema({
     content: { type: String },
   }],
   questions: [{
-    index: { type: Number },
-    desc: { type: String },
     type: { type: String },
     content: { type: String },
-    rightAnswerIndex: { type: Number },
-    count: { type: Number, default: 0 },
-  }],
-  answers: [{
-    index: { type: Number },
     desc: { type: String },
-    type: { type: String },
-    content: { type: String },
-    questionIndex: { type: Number },
     count: { type: Number, default: 0 },
+    answers: [{
+      type: { type: String },
+      content: { type: String },
+      desc: { type: String },
+      isTrue: { type: Boolean, default: false },
+      count: { type: Number, default: 0 },
+    }],
   }],
   settings: {
     hasAnswerAutoChangeTime: { type: Boolean },

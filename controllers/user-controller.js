@@ -44,7 +44,6 @@ exports.Post_Signup = (req, res) => {
 
 exports.Token_Control = (req, res) => {
   try {
-    console.log(req.body);
     jwt.verify(req.body.token, process.env.JWT_KEY, null);
     res.status(200).json({
       isTokenValid: true,
@@ -145,8 +144,6 @@ exports.Post_Login = (req, res) => {
           message: 'Başarıyla giriş yaptınız.',
         });
       }
-      res.statusText = 'Şifre geçersiz (Hata Kodu 0x02)';
-      return res.status(500).json();
     });
   })
     .catch((error) => {
@@ -162,8 +159,8 @@ exports.Delete_User = (req, res) => {
   })
     .exec()
     .then(user => res.status(200).json({
-      message: 'kullanıcı silindi',
       user,
+      message: 'kullanıcı silindi',
     })
       .catch((error) => {
         res.status(500).json({

@@ -42,37 +42,6 @@ exports.Create_Poll = (req, res) => {
     });
 };
 
-exports.Get_All_Polls = (req, res) => {
-  const perPage = 10;
-  const {
-    page,
-  } = req.params;
-  let count = 0;
-  Poll.count({}, (err, countItems) => {
-    count = countItems;
-  });
-  Poll
-    .find()
-    .select('_id name desc user createdAt')
-    .populate('user', '_id email')
-    .limit(perPage)
-    .skip(perPage * page)
-    .sort({
-      createdAt: -1,
-    })
-    .exec()
-    .then((polls) => {
-      res.status(200).json({
-        polls,
-        count,
-      });
-    })
-    .catch((error) => {
-      res.status(500).json({
-        error,
-      });
-    });
-};
 
 exports.Get_Polls = (req, res) => {
   const { _id } = req.user;
@@ -87,7 +56,6 @@ exports.Get_Polls = (req, res) => {
       if (polls.length > 0) {
         res.status(200).json({
           polls,
-          message: 'Anketleri Getirdik...',
         });
       } else {
         res.statusMessage = 'Katilimci bulunamadi';
