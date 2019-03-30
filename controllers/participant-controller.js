@@ -39,8 +39,9 @@ exports.Get_Participants = (req, res) => {
 };
 
 exports.Create_Participant = (req, res) => {
-  const participant = new Participant(CreatePostObject(req.body));
-  participant
+  const {participant} = req.body;
+  const participantModel = new Participant(participant);
+  participantModel
     .save()
     .then(() => {
       res.status(201).json({
@@ -49,36 +50,34 @@ exports.Create_Participant = (req, res) => {
     })
     .then(() => {
       Poll.findOne({
-        _id: req.body.pollId,
+        _id: participant.pollId,
       })
         .exec()
         .then((poll) => {
-          const userAnswers = req.body.answers;
-          const { answers, questions } = poll;
+          const userAnswers = participant.answers;
+          const { questions } = poll;
+          // userAnswer.lenght should equals to poll.questions.lenght
           for (let i = 0; i < userAnswers.length; i += 1) {
-            for (let k = 0; k < answers.length; k += 1) {
-              if (userAnswers[i].questionIndex === answers[k].questionIndex) {
-                if (userAnswers[i].index === answers[k].index) {
-                  answers[k].count += 1;
-                }
-              }
-            }
-            questions[i].count += 1;
+            // Find questionIndex in poll.questions which answered by participant
+            const questionIndex = questions.findIndex(question=>question._id===userAnswers[i].questionId)
+            // Find answerIndex in poll.questions which answered by participant
+            const answerIndex = questions[questionIndex].answers.findIndex(answer=>answer._id===userAnswers[i].answerId)
+            // increase counts
+            questions[questionIndex].answers[answerIndex].count+=1;
+            questions[questionIndex].count += 1;
           }
+          console.log(questions);
           return {
-            answers,
             questions,
           };
         })
         .then(({
-          answers,
           questions,
         }) => {
           Poll.update({
             _id: req.body.pollId,
           }, {
             $set: {
-              answers,
               questions,
             },
           }).exec();

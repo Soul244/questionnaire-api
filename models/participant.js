@@ -11,9 +11,8 @@ const participantSchema = mongoose.Schema({
   surname: { type: String, required: true },
   pollId: { type: String, required: true },
   answers: [{
-    questionIndex: { type: Number, required: true },
-    index: { type: Number, required: true },
-    hasRightAnswer: { type: Boolean, required: true },
+    questionId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    answerId: { type: mongoose.Schema.Types.ObjectId, required: true },
     isTrue: { type: Boolean },
   }],
   createdAt: { type: Date, default: Date.now },
