@@ -26,9 +26,9 @@ exports.Get_Poll = (req, res) => {
 };
 
 exports.Create_Poll = (req, res) => {
-  const {poll} = req.body;
-  const pollModel = new Poll(poll);
-  pollModel
+  console.log(req.body)
+  const poll = new Poll(CreatePostObject(req.body));
+  poll
     .save()
     .then(() => {
       res.status(201).json({

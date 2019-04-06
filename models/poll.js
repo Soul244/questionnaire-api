@@ -17,11 +17,11 @@ const pollSchema = mongoose.Schema({
     content: { type: String },
     desc: { type: String },
     count: { type: Number, default: 0 },
+    rightAnswerIndex: { type: Number, default: null },
     answers: [{
       type: { type: String },
       content: { type: String },
       desc: { type: String },
-      isTrue: { type: Boolean, default: false },
       count: { type: Number, default: 0 },
     }],
   }],

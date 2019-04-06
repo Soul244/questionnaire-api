@@ -39,9 +39,9 @@ exports.Get_Participants = (req, res) => {
 };
 
 exports.Create_Participant = (req, res) => {
-  const {participant} = req.body;
-  const participantModel = new Participant(participant);
-  participantModel
+  console.log(req.body);
+  const participant = new Participant(CreatePostObject(req.body));
+  participant
     .save()
     .then(() => {
       res.status(201).json({
