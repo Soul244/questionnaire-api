@@ -26,7 +26,6 @@ exports.Get_Poll = (req, res) => {
 };
 
 exports.Create_Poll = (req, res) => {
-  console.log(req.body)
   const poll = new Poll(CreatePostObject(req.body));
   poll
     .save()
@@ -42,27 +41,27 @@ exports.Create_Poll = (req, res) => {
       });
     });
 };
-
-
 exports.Get_Polls = (req, res) => {
   const { _id } = req.user;
+  const {page} = req.params;
+  const perPage = 3
   Poll.find({
     user: _id,
   })
+    .limit(perPage)
+    .skip(perPage*page)
     .sort({
       createdAt: -1,
     })
     .exec()
     .then((polls) => {
-      if (polls.length > 0) {
-        res.status(200).json({
-          polls,
+      Poll.countDocuments({user:_id}, (err,count)=>{
+          res.status(200).json({
+          polls: polls,
+          pageCount: Math.ceil(count/(perPage))-1
         });
-      } else {
-        res.statusMessage = 'Katilimci bulunamadi';
-        res.status(204).end();
-      }
-    })
+      })
+  })
     .catch((error) => {
       res.status(500).json({
         error,

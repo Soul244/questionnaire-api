@@ -39,7 +39,6 @@ exports.Get_Participants = (req, res) => {
 };
 
 exports.Create_Participant = (req, res) => {
-  console.log(req.body);
   const participant = new Participant(CreatePostObject(req.body));
   participant
     .save()
@@ -66,7 +65,6 @@ exports.Create_Participant = (req, res) => {
             questions[questionIndex].answers[answerIndex].count+=1;
             questions[questionIndex].count += 1;
           }
-          console.log(questions);
           return {
             questions,
           };

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 const pollSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -41,5 +42,7 @@ const pollSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
+
+pollSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Poll', pollSchema);

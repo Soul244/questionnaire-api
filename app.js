@@ -53,7 +53,7 @@ app.use('/participants', participantsRoutes);
 
 // Route Kontrolü
 app.use((req, res, next) => {
-  const error = new Error('EndPoint bulunamadı');
+  const error = new Error('EndPoint bulunamadı: ' + req.url );
   error.status = 404;
   next(error);
 });
