@@ -1,5 +1,7 @@
+const mongoose = require('mongoose');
 const Poll = require('../models/poll');
 const Participant = require('../models/participant');
+const _ = require('lodash');
 const {
   CreatePostObject,
 } = require('../utils');
@@ -26,11 +28,13 @@ exports.Get_Poll = (req, res) => {
 };
 
 exports.Create_Poll = (req, res) => {
-  const poll = new Poll(CreatePostObject(req.body));
-  poll
+  const pollModel = new Poll(CreatePostObject(req.body));
+  console.log(pollModel)
+  pollModel
     .save()
-    .then(() => {
+    .then((poll) => {
       res.status(201).json({
+        poll,
         message: 'Anket Kaydedildi',
       });
     })
@@ -41,6 +45,43 @@ exports.Create_Poll = (req, res) => {
       });
     });
 };
+
+exports.Copy_Poll = (req, res)=>{
+  console.log(req.params._id)
+  Poll.findOne({
+    _id: req.params._id,
+  })
+  .exec()
+  .then((poll) => {
+    if (poll.length < 1) {
+      res.statusMessage = 'Anket bulunamadi';
+      return res.status(204).end();
+    }
+    poll._id= new mongoose.Types.ObjectId();
+    const pollModel = new Poll(_.pickBy(poll, (val, key) => key !== '__v'));
+    pollModel
+    .save()
+    .then((savedPoll) => {
+      console.log(savedPoll);
+      res.status(201).json({
+        poll: savedPoll,
+        message: 'Anket Kopyası Kaydedildi',
+      });
+    }).catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        error,
+      });
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+    res.status(500).json({
+      error,
+    });
+  });
+}
+
 exports.Get_Polls = (req, res) => {
   const { _id } = req.user;
   const {page} = req.params;

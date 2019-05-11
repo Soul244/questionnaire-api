@@ -5,6 +5,7 @@ const PollController = require('../controllers/poll-controller');
 const checkAuth = require('../middleware/check-auth');
 
 router.post('/', checkAuth, PollController.Create_Poll);
+router.get('/copy/:_id', checkAuth, PollController.Copy_Poll);
 router.get('/paginate/:page', checkAuth, PollController.Get_Polls);
 router.delete('/:_id', checkAuth, PollController.Delete_Poll);
 router.patch('/', checkAuth, PollController.Update_Poll);
