@@ -85,7 +85,7 @@ exports.Copy_Poll = (req, res)=>{
 exports.Get_Polls = (req, res) => {
   const { _id } = req.user;
   const {page} = req.params;
-  const perPage = 3
+  const perPage = 10
   Poll.find({
     user: _id,
   })
