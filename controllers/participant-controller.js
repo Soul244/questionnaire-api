@@ -53,15 +53,12 @@ exports.Create_Participant = (req, res) => {
       })
         .exec()
         .then((poll) => {
-          const userAnswers = participant.answers;
+          const userAnswers = req.body.answers;
           const { questions } = poll;
           // userAnswer.lenght should equals to poll.questions.lenght
-          for (let i = 0; i < userAnswers.length; i += 1) {
-            // Find questionIndex in poll.questions which answered by participant
-            const questionIndex = questions.findIndex(question=>question._id===userAnswers[i].questionId)
-            // Find answerIndex in poll.questions which answered by participant
-            const answerIndex = questions[questionIndex].answers.findIndex(answer=>answer._id===userAnswers[i].answerId)
+          for (let i = 0; i < questions.length; i += 1) {
             // increase counts
+            const {questionIndex, answerIndex} =userAnswers[i];
             questions[questionIndex].answers[answerIndex].count+=1;
             questions[questionIndex].count += 1;
           }
@@ -82,6 +79,7 @@ exports.Create_Participant = (req, res) => {
         });
     })
     .catch((error) => {
+      console.log(error);
       res.status(500).json({
         error,
       });

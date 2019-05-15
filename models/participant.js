@@ -13,6 +13,8 @@ const participantSchema = mongoose.Schema({
   answers: [{
     questionId: { type: mongoose.Schema.Types.ObjectId, required: true },
     answerId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    questionIndex: { type: Number, required: true },
+    answerIndex: { type: Number, required: true },
     isTrue: { type: Boolean },
   }],
   createdAt: { type: Date, default: Date.now },
