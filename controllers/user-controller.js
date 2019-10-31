@@ -117,6 +117,7 @@ exports.Reset_Password = (req, res) => {
 };
 
 exports.Post_Login = (req, res) => {
+  console.log(req.body);
   User.findOne({
     email: req.body.email,
   }).exec().then((user) => {
