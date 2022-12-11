@@ -22,7 +22,7 @@
     "cors": "^2.8.4",
     "dotenv": "^6.2.0",
     "draftjs-to-html": "^0.8.4",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "generate-password": "^1.4.1",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
